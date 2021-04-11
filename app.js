@@ -26,7 +26,6 @@ function getData(url, callback) {
 function getImage(data, callback) {
     const config = [
         "--incognito",
-        "--no-sandbox",
         "--single-process",
         "--no-zygote"
     ];
