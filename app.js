@@ -28,8 +28,7 @@ function getImage(data, callback) {
         "--incognito",
         "--no-sandbox",
         "--single-process",
-        "--no-zygote",
-        "--disable-setuid-sandbox"
+        "--no-zygote"
     ];
     nodeHtmlToImage({
         output: './image.png',
