@@ -18,13 +18,24 @@ function getData(url, callback) {
         .then(body => {
             callback(body)
         })
+        .catch(err => {
+            console.log('error getting data: ', err);
+        })
 }
 
 function getImage(data, callback) {
+    const config = [
+        "--incognito",
+        "--no-sandbox",
+        "--single-process",
+        "--no-zygote",
+        "--disable-setuid-sandbox"
+    ];
     nodeHtmlToImage({
         output: './image.png',
         html: data,
-        waitUntil: 'networkidle2'
+        waitUntil: 'networkidle2',
+        puppeteerArgs: config
     })
         .then(() => callback())
 }
@@ -37,13 +48,12 @@ app.listen(server_port, server_host, function () {
 //Aplicação escutando requisições do método GET "/"
 app.get("/mlb/games", function (req, res) {
     console.log('requisicao mlb games');
-    console.log(process.env.consumer_key)
     getData('http://fnn-sportsapi.herokuapp.com/mlb/games/get', function (data) {
         console.log('getData');
         getImage(data, function () {
             console.log('getImage');
             const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMedia('Saudações fã do esporte beisebola, já tem bola voando pra você que está no descansinho do domingo!', imageData)
+            cliente.uploadMediaAndTweet(imageData, 'Saudações fã do esporte beisebola, já tem bola voando pra você que está no descansinho do domingo!')
         })
     });
 
@@ -57,7 +67,7 @@ app.get("/mlb/scores", function (req, res) {
         getImage(data, function () {
             console.log('getImage');
             const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMedia('E os resultados de ontem (2ª rodada de testes!)', imageData)
+            cliente.uploadMediaAndTweet(imageData, 'E os resultados de ontem (2ª rodada de testes!)')
         })
     });
 
