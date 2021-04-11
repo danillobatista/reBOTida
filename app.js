@@ -43,7 +43,7 @@ app.get("/mlb/games", function (req, res) {
         getImage(data, function () {
             console.log('getImage');
             const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMedia('Os jogos de hoje da MLB (se vocês estiverem vendo isso, está funcionando!)', imageData)
+            cliente.uploadMedia('Saudações fã do esporte beisebola, já tem bola voando pra você que está no descansinho do domingo!', imageData)
         })
     });
 
