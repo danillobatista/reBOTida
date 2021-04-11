@@ -26,8 +26,7 @@ function getData(url, callback) {
 function getImage(data, callback) {
     const config = [
         "--incognito",
-        "--single-process",
-        "--no-zygote"
+        "--single-process"
     ];
     nodeHtmlToImage({
         output: './image.png',
