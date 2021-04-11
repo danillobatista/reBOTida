@@ -53,7 +53,7 @@ app.get("/mlb/games", function (req, res) {
 
 //Aplicação escutando requisições do método GET "/"
 app.get("/mlb/scores", function (req, res) {
-    console.log('requisicao mlb games');
+    console.log('requisicao mlb scores');
     makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
         console.log('makeImageFromURL');
         const imageData = fs.readFileSync('./image.png')
