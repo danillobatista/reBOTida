@@ -40,28 +40,16 @@ app.listen(server_port, server_host, function () {
     console.log("Aplicação online.");
 });
 
-let job1 = new CronJob('00 30 9 * * 0-6',
+let job2 = new CronJob('00 31 9 * * 0-6',
     function () {
         //o que rodar
-        console.log('requisicao mlb games');
+        console.log('requisicao mlb');
         makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/games/get', function (data) {
             console.log('makeImageFromURL');
             const imageData = fs.readFileSync('./image.png')
             cliente.uploadMediaAndTweet(imageData, 'Saudações fã do esporte beisebola, já tem bola voando pra você que está no descansinho do domingo!')
         });
-    },
-    function () {
-        //depois de encerrado
-        console.log("Cron job stopped!")
-    },
-    true,
-    'America/Sao_Paulo'
-);
 
-let job2 = new CronJob('00 31 9 * * 0-6',
-    function () {
-        //o que rodar
-        console.log('requisicao mlb scores');
         makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
             console.log('makeImageFromURL');
             const imageData = fs.readFileSync('./image.png')
