@@ -40,7 +40,7 @@ app.listen(server_port, server_host, function () {
     console.log("Aplicação online.");
 });
 
-let job2 = new CronJob('00 35 9 * * 1-7',
+let job2 = new CronJob('00 35 9 * * 0-6',
     function () {
         //o que rodar
         console.log('requisicao mlb');
