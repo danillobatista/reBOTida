@@ -40,20 +40,20 @@ app.listen(server_port, server_host, function () {
     console.log("Aplicação online.");
 });
 
-let job2 = new CronJob('00 31 9 * * 0-6',
+let job2 = new CronJob('00 35 9 * * 1-7',
     function () {
         //o que rodar
         console.log('requisicao mlb');
         makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/games/get', function (data) {
             console.log('makeImageFromURL');
             const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMediaAndTweet(imageData, 'Saudações fã do esporte beisebola, já tem bola voando pra você que está no descansinho do domingo!')
+            cliente.uploadMediaAndTweet(imageData, 'Saudações fã do esporte beisebola, que tal conferir os jogos de hoje da MLB:')
         });
 
         makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
             console.log('makeImageFromURL');
             const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMediaAndTweet(imageData, 'E pra você que se perdeu um pouquinho, os resultados de ontem:')
+            cliente.uploadMediaAndTweet(imageData, 'E pra ficar por dentro, os resultados de ontem:')
         });
     },
     function () {
