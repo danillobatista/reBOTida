@@ -2,7 +2,7 @@ require('dotenv').config()
 
 const app = require("./config/server.js");
 const cliente = require('./config/twitter')
-var CronJob = require('cron').CronJob;
+const message = require('./config/messages');
 const fs = require('fs')
 const puppeteer = require('puppeteer');
 
@@ -40,26 +40,18 @@ app.listen(server_port, server_host, function () {
     console.log("Aplicação online.");
 });
 
-let job2 = new CronJob('00 35 9 * * 0-6',
-    function () {
-        //o que rodar
-        console.log('requisicao mlb');
-        makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/games/get', function (data) {
-            console.log('makeImageFromURL');
-            const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMediaAndTweet(imageData, 'Saudações fã do esporte beisebola, que tal conferir os jogos de hoje da MLB:')
-        });
 
-        makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
-            console.log('makeImageFromURL');
-            const imageData = fs.readFileSync('./image.png')
-            cliente.uploadMediaAndTweet(imageData, 'E pra ficar por dentro, os resultados de ontem:')
-        });
-    },
-    function () {
-        //depois de encerrado
-        console.log("Cron job stopped!")
-    },
-    true,
-    'America/Sao_Paulo'
-);
+app.get('/tweet', (req, res) => {
+    makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
+        console.log('makeImageFromURL');
+        const imageData = fs.readFileSync('./image.png')
+        cliente.uploadMediaAndTweet(imageData, '#ReBOTida ' + message.messageScores())
+    });
+    console.log('requisicao mlb cron');
+    makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/games/get', function (data) {
+        console.log('makeImageFromURL');
+        const imageData = fs.readFileSync('./image.png')
+        cliente.uploadMediaAndTweet(imageData, '#ReBOTida ' + message.messageGames())
+    });
+    res.send('access complete');
+});
