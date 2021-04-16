@@ -5,6 +5,8 @@ const salute = [
     "Olá",
     "Oi",
     "Tudo bem com você",
+    "Salve salve",
+    "Um abraço"
 ];
 
 const vocative = [
