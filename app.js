@@ -42,16 +42,17 @@ app.listen(server_port, server_host, function () {
 
 
 app.get('/tweet', (req, res) => {
-    makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
-        console.log('makeImageFromURL');
-        const imageData = fs.readFileSync('./image.png')
-        cliente.uploadMediaAndTweet(imageData, '#ReBOTida ' + message.messageScores())
-    });
-    console.log('requisicao mlb cron');
     makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/games/get', function (data) {
         console.log('makeImageFromURL');
         const imageData = fs.readFileSync('./image.png')
         cliente.uploadMediaAndTweet(imageData, '#ReBOTida ' + message.messageGames())
+
+        makeImageFromURL('http://fnn-sportsapi.herokuapp.com/mlb/scores/get', function (data) {
+            console.log('makeImageFromURL');
+            const imageData = fs.readFileSync('./image.png')
+            cliente.uploadMediaAndTweet(imageData, '#ReBOTida ' + message.messageScores())
+        });
     });
+
     res.send('access complete');
 });
